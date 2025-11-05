@@ -1,5 +1,6 @@
 package com.anywhere.product_app_responsive_ui.presentation.ui.product_screens
 
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat

@@ -100,7 +100,7 @@ fun ProductDetailScreen(
                 )
             )
         }
-    ) { paddingValues ->
+    ) { paddingValues -> // ensures content isn’t overlapped by TopAppBar
         //show or hide UI elements with smooth animations
         AnimatedVisibility(
             visible = isVisible, //fadeIn - starts transparent > becomes fully visible in 300ms
@@ -115,7 +115,6 @@ fun ProductDetailScreen(
                 DeviceConfiguration.MOBILE_LANDSCAPE -> {
                     ProductDetailContent(product = product)
                 }
-
                 else -> {
                     ProductDetailContentTablet(product = product)
                 }

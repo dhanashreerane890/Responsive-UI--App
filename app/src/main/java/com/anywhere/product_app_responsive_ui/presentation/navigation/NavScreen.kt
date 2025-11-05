@@ -49,16 +49,21 @@ fun NavGraph(
             popEnterTransition = {
                 fadeIn(animationSpec = tween(300)) + //starts transparent → becomes fully visible in 300ms
                         slideInHorizontally(
-                            initialOffsetX = { -300 }, // slide to right
+                            initialOffsetX = { -300 }, // slide to right - Moves from left → center
                             animationSpec = tween(300)
                         )
+            },
+
+            // When entering ProductList (initial navigation)
+            enterTransition = {
+                fadeIn(animationSpec = tween(300))
             },
 
             // When leaving ProductList (navigating to ProductDetail)
             exitTransition = {
                 fadeOut(animationSpec = tween(250)) +
                         slideOutHorizontally(
-                            targetOffsetX = { -300 }, // slide to left
+                            targetOffsetX = { 300 }, // slide to left
                             animationSpec = tween(250)
                         )
             }
@@ -89,11 +94,16 @@ fun NavGraph(
                         )
             },
 
-            // When leaving ProductDetail (pressing Back)
+            // When entering from product list to ProductDetail - go forward
+            exitTransition = {
+                fadeOut(animationSpec = tween(250))
+            },
+
+            // When leaving ProductDetail (pressing Back) - go backward
             popExitTransition = {
                 fadeOut(animationSpec = tween(250)) +
                         slideOutHorizontally(
-                            targetOffsetX = { 300 }, // slide to right
+                            targetOffsetX = { -300 }, // slide to right
                             animationSpec = tween(250)
                         )
             }
@@ -101,9 +111,9 @@ fun NavGraph(
             val productId = backStackEntry.arguments?.getInt("productId") ?: return@composable
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-            val product = (uiState as? ProductUiState.Success)
-                ?.products
-                ?.find { it.id == productId }
+            val product = (uiState as ProductUiState.Success)
+                .products
+                .find { it.id == productId }
                 ?: return@composable
 
             ProductDetailScreen(
